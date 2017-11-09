@@ -11,6 +11,7 @@ namespace LaCorridor.Logging.AzureEventHubs
             return factory;
         }
 
+#if NETSTANDARD2_0
         public static ILoggingBuilder AddEventHub(this ILoggingBuilder builder, string eventHubConnectionString, LogLevel minLogLevel = LogLevel.Warning)
         {
             builder.Services.AddSingleton<ILoggerProvider, EHLoggerProvider>((serviceProvider) =>
@@ -20,5 +21,6 @@ namespace LaCorridor.Logging.AzureEventHubs
 
             return builder;
         }
+#endif
     }
 }
