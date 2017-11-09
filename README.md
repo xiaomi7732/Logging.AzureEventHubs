@@ -57,3 +57,5 @@ namespace WebExample
         }
 ```
 
+# Result Example:
+![Example Result Image](https://github.com/LaCorridor/Logging.AzureEventHubs/blob/master/Assets/ExampleResult.png)
