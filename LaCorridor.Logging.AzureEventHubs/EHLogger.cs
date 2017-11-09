@@ -20,7 +20,7 @@ namespace LaCorridor.Logging.AzureEventHubs
         public IDisposable BeginScope<TState>(TState state)
         {
             // Not supported yet.
-            throw new NotImplementedException();
+            return null;
         }
 
         public bool IsEnabled(LogLevel logLevel)
