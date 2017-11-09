@@ -9,11 +9,11 @@ namespace LaCorridor.Logging.AzureEventHubs
     {
         private readonly EventHubClient _client;
         private readonly ConcurrentDictionary<string, EHLogger> _loggers = new ConcurrentDictionary<string, EHLogger>();
-        private readonly Func<string, LogLevel> _filter;
+        private readonly LogLevel _logLevel;
 
-        public EHLoggerProvider(Func<string, LogLevel> filter, string eventHubConnectionString)
+        public EHLoggerProvider(LogLevel logLevel, string eventHubConnectionString)
         {
-            _filter = filter;
+            _logLevel = logLevel;
             Arguments.IsNotNullOrEmpty(eventHubConnectionString, nameof(eventHubConnectionString));
             _client = EventHubClient.CreateFromConnectionString(eventHubConnectionString);
         }
@@ -25,12 +25,7 @@ namespace LaCorridor.Logging.AzureEventHubs
 
         private EHLogger CreateLoggerImplementation(string categoryName)
         {
-            Func<string, LogLevel> targetFilter = _filter;
-            if (targetFilter == null)
-            {
-                targetFilter = new Func<string, LogLevel>(name => LogLevel.Warning);
-            }
-            return new EHLogger(_client, targetFilter(categoryName), categoryName);
+            return new EHLogger(_client, _logLevel, categoryName);
         }
 
         public void Dispose()

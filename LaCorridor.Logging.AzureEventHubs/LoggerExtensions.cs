@@ -5,9 +5,9 @@ namespace LaCorridor.Logging.AzureEventHubs
 {
     public static class LoggerExtensions
     {
-        public static ILoggerFactory AddEventHubLogger(this ILoggerFactory factory, string eventHubConnectionString, Func<string, LogLevel> filter = null)
+        public static ILoggerFactory AddEventHubLogger(this ILoggerFactory factory, string eventHubConnectionString, LogLevel minLogLevel = LogLevel.Warning)
         {
-            factory.AddProvider(new EHLoggerProvider(filter, eventHubConnectionString));
+            factory.AddProvider(new EHLoggerProvider(minLogLevel, eventHubConnectionString));
             return factory;
         }
     }
