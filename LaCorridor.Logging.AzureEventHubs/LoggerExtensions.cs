@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace LaCorridor.Logging.AzureEventHubs
@@ -9,6 +9,16 @@ namespace LaCorridor.Logging.AzureEventHubs
         {
             factory.AddProvider(new EHLoggerProvider(minLogLevel, eventHubConnectionString));
             return factory;
+        }
+
+        public static ILoggingBuilder AddEventHub(this ILoggingBuilder builder, string eventHubConnectionString, LogLevel minLogLevel = LogLevel.Warning)
+        {
+            builder.Services.AddSingleton<ILoggerProvider, EHLoggerProvider>((serviceProvider) =>
+            {
+                return new EHLoggerProvider(minLogLevel, eventHubConnectionString);
+            });
+
+            return builder;
         }
     }
 }
